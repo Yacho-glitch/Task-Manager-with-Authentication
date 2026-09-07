@@ -8,8 +8,18 @@ use Illuminate\Support\Facades\Auth;
 
 class TaskController extends Controller {
     // List tasks for the authenticated user
-    public function index() {
-        return Task::where('user_id', Auth::id())->get();
+    public function index(Request $request) {
+
+        // Start with tasks belonging to the logged-in user
+        $query = Task::where('user_id', Auth::id());
+
+        // Filtering by status
+        if ($request->has('status')) {
+            $query->where('status', $request->status);
+        }
+
+        // Pagination (10 tasks per page)
+        return $query->paginate(10);
     }
 
     // Create a new task
@@ -18,6 +28,9 @@ class TaskController extends Controller {
             'title' => 'required|string|max:255',
             'description' => 'nullable|string',
             'status' => 'boolean'
+        ],[
+            'title.required' => 'A task title is required!',
+            'status.boolean' => 'Status must be true or false.'
         ]);
 
         $task = Task::create([
