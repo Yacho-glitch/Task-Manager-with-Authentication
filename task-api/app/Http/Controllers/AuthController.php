@@ -11,45 +11,75 @@ class AuthController extends Controller {
 
     // Register a new user
     public function register(Request $request) {
-        $request->validate([
-            'name' => 'required|string',
-            'email' => 'required|string|unique:users',
-            'password' => 'required|string|confirmed'
+        // $request->validate([
+        //     'name' => 'required|string',
+        //     'email' => 'required|string|unique:users',
+        //     'password' => 'required|string|confirmed'
+        // ]);
+
+        // $user = User::create([
+        //     'name' => $request->name,
+        //     'email' => $request->email,
+        //     'password' => Hash::make($request->password)
+        // ]);
+
+        // return response()->json(['user' => $user], 201);
+
+        // #######################################################
+
+        $request->headers->set('Accept', 'application/json');
+
+        $validated = $request->validate([
+            'name' => 'required|string|max:255',
+            'email' => 'required|string|email|unique:users',
+            'password' => 'required|string|min:6'
         ]);
 
         $user = User::create([
-            'name' => $request->name,
-            'email' => $request->email,
-            'password' => Hash::make($request->password)
+            'name' => $validated['name'],
+            'email' => $validated['email'],
+            'password' => Hash::make($validated['password'])
         ]);
 
-        return response()->json(['user' => $user], 201);
+        $token = $user->createToken('auth_token')->plainTextToken;
+
+        return response()->json([
+            'token' => $token,
+            'user' => $user
+        ], 201);
+
+        // ##################################################
+
+        // return response()->json([
+        //     'raw' => $request->getContent(),
+        //     'parsed' => $request->all()
+        // ]);
     }
 
     // Login existing user
     public function login(Request $request) {
-        $request->validate([
-            'email' => 'required|string',
+
+        $request->headers->set('Accept', 'application/json');
+
+        $validated = $request->validate([
+            'email' => 'required|string|email',
             'password' => 'required|string'
         ]);
 
-        $user = User::where('email', $request->email)->first();
+        $user = User::where('email', $validated['email'])->first();
 
-        if (!$user || !Hash::check($request->password, $user->password)) {
-            throw ValidationException::withMessages([
-                'email' => ['The provider credentials are incorrect']
-            ]);
+        if (!$user || !Hash::check($validated['password'], $user->password)) {
+            return response()->json([
+                'message' => 'Invalid credentials'
+            ], 401);
         }
 
         $token = $user->createToken('auth_token')->plainTextToken;
 
-        return response()->json(['token' => $token, 'user' => $user]);
-    }
+        return response()->json([
+            'token' => $token,
+            'user' => $user
+        ], 200);
 
-    // Logout user
-    public function logout(Request $request) {
-        $request->user()->tokens()->delete();
-
-        return response()->json(['user' => 'Logged out']);
     }
 }
