@@ -18,8 +18,22 @@ class TaskController extends Controller {
             $query->where('status', $request->status);
         }
 
-        // Pagination (10 tasks per page)
-        return $query->paginate(10);
+        // Search by title
+        if ($request->has('q')) {
+            $query->where('title', 'like', '%'.$request->q.'%');
+        }
+
+        // Sorting Tasks
+        if ($request->has('sort')) {
+            $query->orderBy($request->sort, 'asc');
+        }
+
+        // Custom Pagination Response
+        return response()->json([
+            'tasks' => $query->paginate(10)->items(),
+            'total' => $query->paginate(10)->total(),
+            'page' => $query->paginate(10)->currentPage()
+        ]);
     }
 
     // Create a new task
