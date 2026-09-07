@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
+use App\Models\Task;
 
 class User extends Authenticatable
 {
@@ -24,6 +25,10 @@ class User extends Authenticatable
         'email',
         'password',
     ];
+
+    public function tasks() {
+        return $this->hasMany(Task::class);
+    }
 
     /**
      * The attributes that should be hidden for serialization.
