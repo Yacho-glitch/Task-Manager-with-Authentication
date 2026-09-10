@@ -11,6 +11,7 @@ export default function Register() {
         try {
             const res = await api.post('/register', { name, email, password });
             alert("Registration successful!");
+            window.location.href = "/login"; // redirect to login
         } catch (error) {
             alert("Registration failed!");
         }

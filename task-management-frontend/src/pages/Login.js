@@ -11,6 +11,7 @@ export default function Login() {
             const res = await api.post('/login', { email, password });
             localStorage.setItem('token', res.data.token);
             alert('Login successful!');
+            window.location.href = "/dashboard"; // redirect to dashboard
         } catch (err) {
             alert("Login failed!");
         }

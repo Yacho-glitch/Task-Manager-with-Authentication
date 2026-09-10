@@ -1,19 +1,15 @@
-import { useState, useEffect } from "react";
+import React, { useStatet } from "react";
 import api from "../api/api";
 
-export default function TaskForm() {
-    const [taskForm, setTaskForm] = useState({
-        title: "",
-        description: "",
-        status: ""
-    });
-    const [error, setError] = useState("");
+export default function TaskForm({ onTaskCreated }) {
+    const [title, setTitle] = useState("");
 
-    useEffect(() => {
-        api.post('/task')
-            .then(res => setTaskForm(res.data.tasks))
-            .catch(err => console.error(err))
-    }, []);
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+        const res = await api.post("/tasks", { title, status: false });
+        onTaskCreated(res.data);
+        setTitle("");
+    }
 
     return (
         <div>
