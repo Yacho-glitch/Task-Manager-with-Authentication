@@ -1,24 +1,26 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import api from "../api/api";
+import { AuthContext } from "../context/AuthContext";
 
 export default function Login() {
+    const { login } = useContext(AuthContext);
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
 
-    const handleLogic = async (e) => {
+    const handleLogin = async (e) => {
         e.preventDefault();
         try {
             const res = await api.post('/login', { email, password });
-            localStorage.setItem('token', res.data.token);
+            login(res.data.token);
             alert('Login successful!');
             window.location.href = "/dashboard"; // redirect to dashboard
         } catch (err) {
             alert("Login failed!");
         }
-    }
+    };
 
     return (
-        <form onSubmit={handleLogic}>
+        <form onSubmit={handleLogin}>
             <h2>Login</h2>
             <input 
                 type="email"
