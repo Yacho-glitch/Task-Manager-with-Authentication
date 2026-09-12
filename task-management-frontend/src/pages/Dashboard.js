@@ -1,3 +1,4 @@
+import "./../styles/Dashboard.css";
 import React, { useState, useEffect } from "react";
 import api from './../api/api';
 import TaskForm from './../components/TaskForm';

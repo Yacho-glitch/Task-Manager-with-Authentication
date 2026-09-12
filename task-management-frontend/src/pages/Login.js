@@ -1,6 +1,7 @@
 import React, { useContext, useState } from "react";
 import api from "../api/api";
 import { AuthContext } from "../context/AuthContext";
+import "./../styles/Login.css";
 
 export default function Login() {
     const { login } = useContext(AuthContext);
@@ -20,10 +21,11 @@ export default function Login() {
     };
 
     return (
-        <form onSubmit={handleLogin}>
+        <form className="login-form" onSubmit={handleLogin}>
             <h2>Login</h2>
             <input 
                 type="email"
+                className="login-input"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 placeholder="Email"
@@ -31,11 +33,12 @@ export default function Login() {
 
             <input 
                 type="password"
+                className="login-input"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 placeholder="Password"
             />
-            <button type="submit">Login</button>
+            <button className="login-button" type="submit">Login</button>
         </form>
     )
 }
