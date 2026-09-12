@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import api from '../api/api';
+import "./../styles/Register.css";
 
 export default function Register() {
     const [name, setName] = useState("");
@@ -18,10 +19,11 @@ export default function Register() {
     };
 
     return (
-        <form onSubmit={handleRegister}>
+        <form className='register-form' onSubmit={handleRegister}>
             <h2>Register</h2>
             <input 
                 type="text"
+                className='register-input'
                 value={name}
                 onChange={(e) => setName(e.target.value)}
                 placeholder="Enter your name"
@@ -29,6 +31,7 @@ export default function Register() {
 
             <input 
                 type="email"
+                className='register-input'
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 placeholder="Enter your email"
@@ -36,12 +39,13 @@ export default function Register() {
 
             <input 
                 type="password"
+                className='register-input'
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 placeholder="Enter your password"
             />
 
-            <button type="submit">Register</button>
+            <button className='register-button' type="submit">Register</button>
         </form>
     )
 }
