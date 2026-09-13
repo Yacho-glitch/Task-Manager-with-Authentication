@@ -1,32 +1,35 @@
 .task-form {
-    display: flex;
-    justify-content: center;
-    gap: 10px;
-    margin-bottom: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.task-form input,
+.task-form button {
+  padding: 12px;              /* same padding */
+  font-size: 14px;            /* same font size */
+  border-radius: 6px;         /* same rounded corners */
+  box-sizing: border-box;     /* ensures padding doesn’t shrink width/height */
+  height: 42px;               /* force same height */
 }
 
 .task-form input {
-    flex: 1;
-    padding: 10px 12px;
-    border: 1px solid #ccc;
-    border-radius: 6px;
-    font-size: 14px;
-    transition: border-color 0.2s ease;
+  flex: 1;
+  border: 1px solid #ccc;
+  transition: border-color 0.2s ease;
 }
 
 .task-form input:focus {
-    border-color: #007bff;
-    outline: none;
+  border-color: #007bff;
+  outline: none;
 }
 
 .task-form button {
   margin-left: 10px;
-  padding: 10px 16px;
   background-color: #007bff;
   color: white;
   border: none;
-  border-radius: 6px;
-  font-size: 14px;
   cursor: pointer;
   transition: background-color 0.2s ease;
 }
