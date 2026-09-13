@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import api from "../api/api";
+import "./../styles/TaskForm.css";
 
 export default function TaskForm({ onTaskCreated }) {
     const [title, setTitle] = useState("");
@@ -12,8 +13,7 @@ export default function TaskForm({ onTaskCreated }) {
     }
 
     return (
-        <div>
-            <form onSubmit={handleSubmit}>
+            <form className="task-form" onSubmit={handleSubmit}>
                 <input 
                     type="text"
                     value={title}
@@ -22,6 +22,5 @@ export default function TaskForm({ onTaskCreated }) {
                 />
                 <button type="submit">Add Task</button>
             </form>
-        </div>
     )
 }

@@ -31,6 +31,10 @@
     transition: color 0.2s ease-in-out;
 }
 
+.navbar a.active {
+  border-bottom: 2px solid #ffdd57;
+}
+
 .navbar a:hover {
     color: #ffdd57;
 }
@@ -48,4 +52,11 @@
 .navbar button:hover {
   background-color: #ffdd57;
   color: #333;
+}
+
+@media (max-width: 600px) {
+  .navbar ul {
+    flex-direction: column;
+    gap: 10px;
+  }
 }

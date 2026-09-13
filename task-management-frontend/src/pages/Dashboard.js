@@ -28,10 +28,10 @@ function Dashboard() {
     }
 
     return (
-        <div>
+        <div className="dashboard">
             <h1>Task Manager</h1>
             <TaskForm onTaskCreated={handleTaskCreated} />
-            <ul>
+            <ul className="task-list">
                 {tasks.map(task => (
                     <TaskItem 
                         key={task.id}

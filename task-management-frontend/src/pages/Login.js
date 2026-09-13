@@ -1,4 +1,5 @@
 import React, { useContext, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import api from "../api/api";
 import { AuthContext } from "../context/AuthContext";
 import "./../styles/Login.css";
@@ -7,6 +8,7 @@ export default function Login() {
     const { login } = useContext(AuthContext);
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
+    const navigate = useNavigate();
 
     const handleLogin = async (e) => {
         e.preventDefault();
@@ -14,7 +16,10 @@ export default function Login() {
             const res = await api.post('/login', { email, password });
             login(res.data.token);
             alert('Login successful!');
-            window.location.href = "/dashboard"; // redirect to dashboard
+            // window.location.href = "/dashboard"; // redirect to dashboard
+            navigate("/dashboard");
+
+            console.log(res.data);
         } catch (err) {
             alert("Login failed!");
         }
