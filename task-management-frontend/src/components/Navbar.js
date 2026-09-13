@@ -20,7 +20,9 @@ function Navbar() {
                 {!isAuthenticated && <li><Link to="/login">Login</Link></li>}
                 {!isAuthenticated && <li><Link to="/register">Register</Link></li>}
                 {isAuthenticated && (
-                    <button onClick={handleLogout}>Logout</button>
+                    <li>
+                        <button onClick={handleLogout}>Logout</button>
+                    </li>
                 )}
             </ul>
         </nav>
